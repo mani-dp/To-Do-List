@@ -1,11 +1,17 @@
 "use client";
 import { useState } from "react";
 import { Todo } from "@/types/TodoCardType/Todo";
+import TodosCard from "@/components/Todopage";
+import toast from "react-hot-toast";
+import Sidebar from "./components/sidebar/Sidebar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
 
 
 export default function Home() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isactive, setisactive] = useState<"all" | "compeleted">("all")
 
   const Addtodo = () => {
     if (!todo.trim()) return;
@@ -15,8 +21,9 @@ export default function Home() {
       completed: false
     }
     setTodos((prevTodos) => [...prevTodos, newtodo])
+
     setTodo("");
-    // console.log("succuess!!!!!")
+    toast.success('your project is add!')
   }
 
   // completing
@@ -30,59 +37,74 @@ export default function Home() {
 
   const handleDelete = (id: number) => {
     setTodos((prevTodos) => prevTodos.filter((fill) => fill.id !== id));
+    toast.error("کارت شما حذف شد")
+  }
+
+  // handleOpenModal
+  const handleClick = () => {
+    setIsModalOpen(true)
   }
 
   return (
-    <main className="min-h-screen bg-[#121212] flex flex-col gap-5 p-10">
-      <div>
-        <div className="mx-auto max-w-xl p-6 bg-gray-800 rounded-xl shadow-2xl">
-          <h1 className=" text-3xl font-bold mb-5"> To Do List </h1>
-          <div className="flex gap-2 ">
+    <main className="flex bg-[#121212]">
+      <Sidebar onAddClick={handleClick} />
+      <div className="w-full border p-5 ">
+        {/* Todos List */}
+        <div className="w-full flex flex-col  mt-6 space-y-2">
+          <div className=" h-17">
+            <span className="text-gray-500 text-[25px]"> All project</span>
+          </div>
+          {todos.map((item) => (
+            <TodosCard
+              key={item.id}
+              item={item}
+              toggleTodo={toggleTodo}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </div>
+      </div>
+
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      >
+        <DialogContent className="max-w-2xl bg-gray-500 ">
+          <DialogHeader>
+            <DialogTitle>
+              Add New Todo
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="flex gap-2">
             <input
               type="text"
               value={todo}
               onChange={(event) => setTodo(event.target.value)}
-              // onKeyDown={(event) => { if (event.key === "Enter") { Addtodo()}}}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  Addtodo()
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  Addtodo();
+                  setIsModalOpen(false);
                 }
               }}
-              placeholder="what do you need to do"
+              placeholder="What do you need to do?"
               className="flex-1 rounded-lg border px-4 py-2 outline-none"
+
+
             />
+
             <button
-              onClick={Addtodo}
+              onClick={() => {
+                Addtodo();
+                setIsModalOpen(false);
+              }}
               className="rounded-lg bg-black px-4 py-2 text-white"
             >
               Add
             </button>
           </div>
-        </div>
-      </div>
-      {/* Todos List */}
-      <div className="mt-6 space-y-2">
-        {todos.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center justify-between rounded-lg border p-4"
-          >
-            <input
-              type="checkbox"
-              checked={item.completed}
-              onChange={() => toggleTodo(item.id)}
-            />
-            <span> {item.title} </span>
-            <button
-              className="p-2 rounded-2xl bg-red-600 hover:bg-red-800 "
-              onClick={() => handleDelete(item.id)}
-            >
-              Delete
-            </button>
-          </div>
-
-        ))}
-      </div>
+        </DialogContent>
+      </Dialog>
     </main >
   )
 }
