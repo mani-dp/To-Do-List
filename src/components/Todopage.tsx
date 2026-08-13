@@ -22,7 +22,7 @@ export default function TodosCard({ item, handleDelete, toggleTodo }: TodoCardPr
                 <div className="flex gap-7 ">
                     <input
                         type="checkbox"
-                        checked={item.completed}
+                        checked={item.compeleted}
                         onChange={() => toggleTodo(item.id)}
                         className="h-6 w-6 appearance-none rounded-full border-2 border-gray-400
                      cursor-pointer checked:bg-blue-700 checked:border-blue-500"
