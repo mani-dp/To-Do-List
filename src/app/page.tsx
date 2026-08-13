@@ -25,10 +25,10 @@ export default function Home() {
     toast.success('your project is add!')
   }
 
-  // completing
-  const toggleTodo = (id: number) => {
-    setTodos((prevTodos) => prevTodos.map((item) =>
-      item.id === id ? { ...item, compeleted: item.compeleted } : item
+  // compeleted
+  const toggleTodo = (Id: Number) => {
+    setTodos((prev) => prev.map((item) => item.id === Id
+      ? { ...item, compeleted: !item.compeleted } : item
     ))
   }
 
