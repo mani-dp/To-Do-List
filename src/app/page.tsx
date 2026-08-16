@@ -23,6 +23,7 @@ export default function Home() {
     setTodos((prevTodos) => [...prevTodos, newtodo])
     setTodo("");
     toast.success('your project is add!')
+    
   }
 
   // compeleted
@@ -38,7 +39,7 @@ export default function Home() {
 
   const handleDelete = (id: number) => {
     setTodos((prevTodos) => prevTodos.filter((fill) => fill.id !== id));
-    toast.error("کارت شما حذف شد")
+    toast.error("your card was Deleted")
   }
 
   // handleOpenModal

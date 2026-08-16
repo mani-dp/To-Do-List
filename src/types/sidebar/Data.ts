@@ -1,7 +1,7 @@
 import { NavItemId } from "./SidebarProp";
 
 interface Iprops { 
-    id : NavItemId,
+    id : NavItemId ,
     label : string,
 }
 

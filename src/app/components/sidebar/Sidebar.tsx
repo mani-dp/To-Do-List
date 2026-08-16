@@ -1,5 +1,5 @@
 import { NavItems } from "@/types/sidebar/Data";
-import { NavItemId, SidebarProp } from "@/types/sidebar/SidebarProp";
+import {  NavItemId, SidebarProp } from "@/types/sidebar/SidebarProp";
 
 export default function Sidebar({ onAddClick, onPageChange, isactive }: SidebarProp) {
 
