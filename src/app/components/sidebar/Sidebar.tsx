@@ -1,9 +1,18 @@
+"use clinet";
+
 import { NavItems } from "@/types/sidebar/Data";
-import {  NavItemId, SidebarProp } from "@/types/sidebar/SidebarProp";
+import { NavItemId, SidebarProp } from "@/types/sidebar/SidebarProp";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 
 export default function Sidebar({ onAddClick, onPageChange, isactive }: SidebarProp) {
+    const [openSideBar, setopenSideBar] = useState()
 
-    const getNavItemsClass = (page : NavItemId) => {
+    const handleOpenSideBar = () => {
+
+    }
+
+    const getNavItemsClass = (page: NavItemId) => {
         return `
               w-full rounded-lg px-4 py-3 text-left transition-color 
               ${isactive === page
@@ -12,9 +21,9 @@ export default function Sidebar({ onAddClick, onPageChange, isactive }: SidebarP
             }
         `
     }
-
     return (
-        <nav className="flex flex-col items-center gap-5 left-0 min-h-screen w-90 p-3 bg-[#222222] ">
+        <nav className="relative flex flex-col items-center gap-5 left-0 min-h-screen w-90 p-3 bg-[#222222] ">
+            <div className="absolute top-5 right-2.5 text-gray-500 cursor-pointer "><Menu /></div>
             <div className="w-full mt-4">
                 <span className="mb-2 text-3xl font-bold text-white">
                     To Do List
@@ -28,7 +37,7 @@ export default function Sidebar({ onAddClick, onPageChange, isactive }: SidebarP
             </button>
             {NavItems.map((item) => (
                 <button
-                    key={item.id} 
+                    key={item.id}
                     onClick={() => onPageChange(item.id)}
                     className={getNavItemsClass(item.id)}
                 >
